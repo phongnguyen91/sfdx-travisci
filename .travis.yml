@@ -7,7 +7,7 @@ env:
   global:
     secure: kOmRq9D0wyq+M5gk5X0ts1eSBopaj0HuyUCJT1WwkomuvXXulKQmFpQIzaMDma+P8bf1/Lv3w5ingEQ8+XFcSTJhVYrP2fPPG9M5MaRcvk/LjoIs2AS5r0+fL2Y6kt2OmmhW1JwxaGiJrgiwEqsRPrb1ngoBAwLYvi0ndqjQrbdM80a5jWp7Ndzk033h9R2aqsITwlI29IMR+uI9ZN2sm/B7Ze3+E3cBvqFzv+KRtQiP36gplEtcp66B90BMMccj0dhBBWGb2Dw4gL485+e4Nf8kmcY+7+gnwzFtblupU+gKdnUzAEhVnRw/OWC4zShTEcIzRWMhuRyder8s6oVfpoJ1Eg6ALuRYZCatVNMa+ubx3S1bc4bh0aSAAJmXDFLvoyUAnQpSh+f6Q7tmKIuRW9ROIIbrKhXk3RFlPJY6ePE9sV8ppCo8Xq1cdkqbfS3bNfnROWQO7dyuRY2pxGxyJpO6+24n4DGnlRUGgoCJDsfnCQoXu+T/rDcinT/lwdbMblUN2Lmz4lkEutH4yUGD8CxP8IOQhWJORhT1HOXW9h9gmclJZ1n7ohv4QN2J6juAVxU1d9hg9GObklc84VLbIn9K0tXUWTVtHr45SxnVZwaX7X/eoOPGsonitaB0p1Y5/DynWVoFxIPxjYyygWBO4Q4wFiMslEfcBQAn4x/h5uU=
 before_install:
-#- openssl aes-256-cbc -k "Isobar@123" -in assets/server.key.enc -out assets/server.key -d
+- openssl aes-256-cbc -k "$super_secret_password" -in assets/server.key.enc -out assets/server.key -d
 - export SFDX_AUTOUPDATE_DISABLE=false
 - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
@@ -23,7 +23,7 @@ before_install:
   --username $USERNAME --setdefaultdevhubusername -a HubOrg
 script:
 - sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait
-  2
+  4
 - sfdx force:org:display -u ciorg
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg --wait 10
